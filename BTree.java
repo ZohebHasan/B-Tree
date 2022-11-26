@@ -1,5 +1,3 @@
-package cse214hw3;
-
 public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //fully functional and comparable.
     private static int minimumDegree; //TODO Static or no?
     private Node<E> root;
