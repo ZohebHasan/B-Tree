@@ -7,13 +7,13 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
         this.root = new Node<>(minimumDegree);
     }
 
-    private void insertNonFull(E element, Node<E> node) { //TODO
+    private void insertNonFull(E element, Node<E> node) {
         int i = node.num - 1;
         //if it's leaf node
         if (node.isLeaf()) {
             if (node.dataList.size() < i + 1) {
                 int j = 0;
-                if (element.compareTo(node.dataList.get(j)) < 0) { //TODO need to check corner case with smaller value.
+                if (element.compareTo(node.dataList.get(j)) < 0) { 
                     E temp = node.dataList.get(j);
                     node.dataList.set(j, element);
                     node.dataList.add(temp);
@@ -22,7 +22,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
                 }
             } else {
                 while (i >= 0 && element.compareTo(node.dataList.get(i)) < 0) {
-                    node.dataList.set(i, node.dataList.get(i)); //TODO not sure; might throw an exception.
+                    node.dataList.set(i, node.dataList.get(i)); 
                     i--;
                 }
                 node.dataList.add(i + 1, element);
@@ -31,7 +31,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
         }
         //if it's not a leaf node which means an internal node holding the leaves
         else {
-            while (i >= 0 && element.compareTo(node.dataList.get(i)) < 0) { //TODO Breakpoint
+            while (i >= 0 && element.compareTo(node.dataList.get(i)) < 0) { 
                 i--;
             }
             i++;
@@ -46,7 +46,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
     }
 
 
-    private void splitChild(Node<E> parentNode, Node<E> childNode) { //TODO I will have to modify  an added one extra parameter index for the other search method.
+    private void splitChild(Node<E> parentNode, Node<E> childNode) { 
 
         //if the child node has no children
         if (childNode.isLeaf()) {
@@ -90,12 +90,12 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
 
             }
             // todo medium is smaller
-            else { // todo need to modify the logic
+            else {
                 int count = parentNode.num - 1;
                 while (count > 0 && medium.compareTo(parentNode.dataList.get(0)) < 0) {
                     count--;
                 }
-                parentNode.dataList.add(count, medium); // todo need to compare maybe?
+                parentNode.dataList.add(count, medium); 
                 parentNode.num = parentNode.dataList.size();
 
 
@@ -106,7 +106,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
             }
         }
         //todo if it's an internal node
-        else { //todo need to add logic
+        else {
             E medium = childNode.dataList.get((childNode.dataList.size() / 2));
 
 
@@ -144,7 +144,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
 
 
 
-                //tranferring The addresses //todo needs crosscheck
+                //tranferring The addresses 
                 int x = 0;
                 while (x < childNode.childrenAddressList.size() / 2) {
                     left.childrenAddressList.add(childNode.childrenAddressList.get(x));
@@ -168,7 +168,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
                 while (count > 0 && medium.compareTo(parentNode.dataList.get(0)) < 0) {
                     count--;
                 }
-                parentNode.dataList.add(count, medium); // todo need to compare maybe?
+                parentNode.dataList.add(count, medium); 
                 parentNode.num = parentNode.dataList.size();
 
 
@@ -193,7 +193,7 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
     }
 
 
-    private void splitRoot(int index) { //Todo need to deal with the corner case when root needs to have more than left and right.
+    private void splitRoot(int index) { 
         if (root.isLeaf()) { //if root has no children
             Node<E> newRoot = new Node<>(minimumDegree);
             //adding the elements and fixing the sizes in new root
@@ -268,18 +268,18 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
 
     @Override
     public void add(E element) {
-        if (root.dataList.contains(element)) //if the element is already in the node. //TODO not sure if I should call the childrenAddressList or the datalist
+        if (root.dataList.contains(element)) //if the element is already in the node. 
             return;
         else if (!root.isLeaf() && contains(element) != null)
             return;
         else if (root.dataList.isEmpty()) {
             root.dataList.add(element);
             root.num++;
-        } else if (root.isFull()) { //&& root.isLeaf()
+        } else if (root.isFull()) { 
             splitRoot((root.dataList.size() / 2));
-            insertNonFull(element, root); //TODO adding at wrong place in corner case.
+            insertNonFull(element, root);
         } else
-            insertNonFull(element, root); //TODO breakpoint
+            insertNonFull(element, root); 
 
     }
 
@@ -290,11 +290,11 @@ public class BTree<E extends Comparable<E>> implements AbstractBTree<E> { //full
 
     private NodeIndexPair<E> search(E element, Node<E> node) {
         int i = 0;
-        while (i < node.num && element.compareTo(node.dataList.get(i)) > 0) //TODO different from Lecture Slide
+        while (i < node.num && element.compareTo(node.dataList.get(i)) > 0) 
             ++i;
         if (i < node.num && element.compareTo(node.dataList.get(i)) == 0)
             return new NodeIndexPair<>(node, i);
-        if (node.isLeaf()) //TODO check isLeaf
+        if (node.isLeaf()) 
             return null;
         return search(element, node.childrenAddressList.get(i));
     }
