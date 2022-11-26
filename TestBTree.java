@@ -1,6 +1,3 @@
-package cse214hw3;
-
-
 public class TestBTree {
     @SafeVarargs
     private static <T extends Comparable<T>> void addAllInThisOrder(BTree<T> theTree, T... items) {
